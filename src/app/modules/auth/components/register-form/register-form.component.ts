@@ -72,6 +72,10 @@ export class RegisterFormComponent {
             if(response.isAvailable){
               this.showRegister = true
               this.form.controls.email.setValue(email)
+            }else{
+              this.router.navigate(['/login'], { 
+                queryParams: { email }
+              })
             }
           },
           error: (error) => {
