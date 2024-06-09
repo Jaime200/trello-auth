@@ -3,7 +3,36 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+    "paths": {
+      "@models/*": [
+        "./src/app/models/*"
+      ],
+      "@shared/*": [
+        "src/app/modules/shared/*"
+      ],
+      "@auth/*": [
+        "src/app/modules/auth/*"
+      ],
+      "@boards/*": [
+        "src/app/modules/boards/*"
+      ],
+      "@environments/*": [
+        "./src/environments/*"
+      ],
+      "@guards/*": [
+        "./src/app/guards/*"
+      ],
+      "@interceptors/*": [
+        "./src/app/interceptors/*"
+      ],
+      "@services/*": [
+        "./src/app/services/*"
+      ],
+      "@utils/*": [
+        "./src/app/utils/*"
+      ]
+    },
   },
   "files": [
     "src/main.ts",
@@ -11,5 +40,5 @@
   ],
   "include": [
     "src/**/*.d.ts"
-  ]
+  ],
 }
