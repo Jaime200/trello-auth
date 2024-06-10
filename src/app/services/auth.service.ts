@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { catchError, throwError } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +31,11 @@ export class AuthService {
 
   isAvailable(email:string){
     return this.http.post<{ isAvailable: boolean }>(`${environment.API_URL}/api/v1/auth/is-available`, { email })
+  }
+
+  registerAndLogin(name:string, password:string, email:string){
+    return this.register(name, email,password).pipe(
+      switchMap(()=> this.login(email, password))
+    )
   }
 }

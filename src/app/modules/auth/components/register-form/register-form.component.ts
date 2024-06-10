@@ -45,10 +45,10 @@ export class RegisterFormComponent {
       this.errorMsg = ''
       const { name, email, password } = this.form.getRawValue();
       
-      this.authService.register(name,password,email).subscribe({
+      this.authService.registerAndLogin(name,password,email).subscribe({
         next: (response) =>{
           this.status = 'success'
-          this.router.navigate(['/login'], { 
+          this.router.navigate(['/app/board'], { 
             queryParams: { email }
           })
         },
@@ -86,4 +86,5 @@ export class RegisterFormComponent {
         this.formUser.markAllAsTouched()
       }
   }
+
 }
