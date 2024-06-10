@@ -34,8 +34,18 @@ export class AuthService {
   }
 
   registerAndLogin(name:string, password:string, email:string){
-    return this.register(name, email,password).pipe(
+    return this.register(name, password ,email,).pipe(
       switchMap(()=> this.login(email, password))
     )
+  }
+
+  recovery(email:string){
+    return this.http.post(`${environment.API_URL}/api/v1/auth/recovery`, 
+    {email})
+  }
+
+  changePassword(token:string, newPassword: string){
+    return this.http.post(`${environment.API_URL}/api/v1/auth/change-password`, 
+    {token, newPassword})
   }
 }
