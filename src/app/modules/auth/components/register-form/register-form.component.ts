@@ -48,7 +48,7 @@ export class RegisterFormComponent {
       this.authService.registerAndLogin(name,password,email).subscribe({
         next: (response) =>{
           this.status = 'success'
-          this.router.navigate(['/app/board'], { 
+          this.router.navigate(['/app/boards'], { 
             queryParams: { email }
           })
         },
