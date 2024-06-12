@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, catchError, switchMap, tap, throwError } f
 import { TokenService } from '@services/token.service';
 import { ReponseLogin } from '@models/auth.model'
 import { User } from '@models/user.model';
+import { checkToken } from '@interceptors/token.interceptor';
 
 @Injectable({
   providedIn: 'root'
@@ -65,9 +66,7 @@ export class AuthService {
 
   profile(){
     return this.http.get<User>(`${environment.API_URL}/api/v1/auth/profile`, {
-      headers: {
-        Authorization: `Bearer ${this.tokenService.getToken()}`
-      }
+      context: checkToken()
     }).pipe(
       tap(
         reponse =>{
