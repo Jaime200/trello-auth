@@ -28,6 +28,17 @@ export class AuthService {
     )
   }
 
+  refreshToken(refreshToken:string){
+    return this.http.post<ReponseLogin>(`${environment.API_URL}/api/v1/auth/refresh-token`, {refreshToken })
+    .pipe(
+      tap(response =>{
+        this.tokenService.saveToken(response.access_token)
+        this.tokenService.saveRefreshToken(response.refresh_token)
+
+      } )
+    )
+  }
+
   register(name:string, password:string, email:string){
     return this.http.post(`${environment.API_URL}/api/v1/auth/register`, {name, email, password })    
     .pipe(
