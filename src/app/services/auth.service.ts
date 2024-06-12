@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { catchError, switchMap, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, switchMap, tap, throwError } from 'rxjs';
 import { TokenService } from '@services/token.service';
 import { ReponseLogin } from '@models/auth.model'
 import { User } from '@models/user.model';
@@ -10,7 +10,7 @@ import { User } from '@models/user.model';
   providedIn: 'root'
 })
 export class AuthService {
-
+  user$ = new BehaviorSubject<User | null>(null)
   constructor(
     private http: HttpClient,
     private tokenService:TokenService
@@ -21,6 +21,7 @@ export class AuthService {
     .pipe(
       tap(response =>{
         this.tokenService.saveToken(response.access_token)
+
       } )
     )
   }
@@ -67,6 +68,16 @@ export class AuthService {
       headers: {
         Authorization: `Bearer ${this.tokenService.getToken()}`
       }
-    })
+    }).pipe(
+      tap(
+        reponse =>{
+          this.user$.next(reponse)
+        }
+      )
+    )
+  }
+
+  getDataUser(){
+    return this.user$.getValue();
   }
 }
